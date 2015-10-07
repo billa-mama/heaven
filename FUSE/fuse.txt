@@ -21,4 +21,4 @@ hello
 Hello World!
 
 //Unmount the file system.
-# unmount tmp/
+# umount tmp/

@@ -1,49 +1,45 @@
 Package management:
 
-apt-get install reprepro
-apt-get install apache2
+yum install createrepo
+yum install httpd
 service httpd start or service apache2 start
-mkdir -p /var/www/html/repo/conf
-gedit /var/www/html/repo/conf/distributions
+mkdir -p /var/www/html/repo/
 
-add these in the file:
-Origin: Cloudera
-Label: Cloudera
-Suite: stable
-Codename: cloudera
-Version: 0.1
-Architectures: i386 amd64 source
-Components: contrib
-Description: Cloudera
+download rpm files for any software and place it in the repo folder
 
-download deb files for any software and place it in the repo folder
-
-find /var/www/html/repo -name \*.deb -exec reprepro -Vb repo includedeb cloudera {} \;
+createrepo /var/www/html/repo/
 chmod -R ugo+rX /var/www/html/repo
 
---gedit /etc/apt/sources.list.d/my.list
---deb http://localhost/repo cloudera
+#######gedit /etc/yum.repos.d/test.repo
+[repo]
+name=myrepo
+baseurl=http://<IP_ADDRESS>/repo/
+enabled=1
 
-apt-get update
+yum update
 
---after that we can install the software using the command: apt-get install SOFTWARE_IN_REPO_FOLDER
+#######after that we can install the software using the command: apt-get install SOFTWARE_IN_REPO_FOLDER
 
-gedit /etc/apache2/apache2.conf
+gedit /etc/httpd/conf/httpd.conf
 
 // make sure the below looks the same ("Require all granted" is strict)
 <Directory /var/www/>
-	Options Indexes FollowSymLinks
-	AllowOverride None
-	Require all granted
+    Options Indexes FollowSymLinks
+    AllowOverride None
+    Require all granted
 </Directory>
 
 // if it is not working let it be like this
 <Directory /var/www/>
-	Order Allow,Deny
-	Options Indexes FollowSymLinks
-	AllowOverride None
-	Require all granted
-	Allow from all
+    Order Allow,Deny
+    Options Indexes FollowSymLinks
+    AllowOverride None
+    Require all granted
+    Allow from all
 </Directory>
+
+systemctl restart httpd
+systemctl disable firewalld
+systemctl stop firewalld
 
 we can also see the repo by typing http://localhost/repo in the browser
