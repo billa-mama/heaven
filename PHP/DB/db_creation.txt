@@ -1,3 +1,7 @@
+# yum install mysql mysql-server
+# service mysqld start
+# service httpd restart
+
 # mysql -p -u root
 # Create database members;
 # use members

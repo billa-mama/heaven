@@ -43,3 +43,22 @@ systemctl disable firewalld
 systemctl stop firewalld
 
 we can also see the repo by typing http://localhost/repo in the browser
+
+
+
+## To do using FTP
+
+su
+yum install vsftpd
+service vsftpd restart
+cd \ var
+mkdir ftp
+cd ftp
+mkdir test
+cd test
+cat > ssn.c
+SSN College
+Ctrl+d
+cd ..
+createrepo test/
+Browerto type url->ftp://localhost
