@@ -1,0 +1,49 @@
+Package management:
+
+apt-get install reprepro
+apt-get install apache2
+service httpd start or service apache2 start
+mkdir -p /var/www/html/repo/conf
+gedit /var/www/html/repo/conf/distributions
+
+add these in the file:
+Origin: Cloudera
+Label: Cloudera
+Suite: stable
+Codename: cloudera
+Version: 0.1
+Architectures: i386 amd64 source
+Components: contrib
+Description: Cloudera
+
+download deb files for any software and place it in the repo folder
+
+find /var/www/html/repo -name \*.deb -exec reprepro -Vb repo includedeb cloudera {} \;
+chmod -R ugo+rX /var/www/html/repo
+
+--gedit /etc/apt/sources.list.d/my.list
+--deb http://localhost/repo cloudera
+
+apt-get update
+
+--after that we can install the software using the command: apt-get install SOFTWARE_IN_REPO_FOLDER
+
+gedit /etc/apache2/apache2.conf
+
+// make sure the below looks the same ("Require all granted" is strict)
+<Directory /var/www/>
+	Options Indexes FollowSymLinks
+	AllowOverride None
+	Require all granted
+</Directory>
+
+// if it is not working let it be like this
+<Directory /var/www/>
+	Order Allow,Deny
+	Options Indexes FollowSymLinks
+	AllowOverride None
+	Require all granted
+	Allow from all
+</Directory>
+
+we can also see the repo by typing http://localhost/repo in the browser
