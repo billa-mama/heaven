@@ -27,4 +27,16 @@
 
 # route -n
 
+# traceroute IP
+
+# arp
+
+# gedit /etc/network/interfaces - edit this file to set static IP
+
+# /etc/resolv.conf - default DNS
+
+# /etc/hosts - Manual DNS setup
+
+# ping IP
+
 //The ## Commands should not executed if you execute that commands internet connectivity for your computer or entire lab will be last.
